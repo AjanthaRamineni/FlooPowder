@@ -34,7 +34,7 @@ def infiltrate_common_room(zip_dir):
     destination = "{}@tools2.ctsi.ufl.edu".format(username)
     print destination
 
-    os.system("'cat {} |ssh {} ARG1={} 'bash -s'".format(make_script_file,destination,image_type))
+    os.system("cat {} | ssh {} ARG1={} 'bash -s' ".format(make_script_file, destination, image_type))
     folder_name = time.strftime("%m_%d_%y")
     dest_path = "/home/{}/{}/{}".format(username,image_type,folder_name)
     for zip_file in os.listdir(zip_dir):
@@ -42,7 +42,7 @@ def infiltrate_common_room(zip_dir):
             origin  = os.path.join(zip_dir,zip_file)
             os.system('scp {} {}:{}'.format(origin,destination,dest_path))
 
-    os.system('cat {} |ssh {} sh {} {} {} {} {} {}'.format(script_file,destination,image_type,sftp_pass,sftp_usrname,sftp_hostname,zip_dir,folder_name))
+    os.system("cat {} | ssh {} ARG1={} ARG2={} ARG3={} ARG4={} ARG5={} ARG6={} 'bash -s' ".format(script_file,destination,image_type,sftp_pass,sftp_usrname,sftp_hostname,zip_dir,folder_name))
 
 
     #
