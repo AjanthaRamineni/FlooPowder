@@ -29,8 +29,10 @@ def infiltrate_common_room(zip_dir):
     os.system("chmod 774 {}".format(script_file))
     os.system("chmod 774 {}".format(make_script_file))
 
+    # os.system("ls -l")
     # origin  = os.path.join(zip_dir,zip_file)
     destination = "{}@tools2.ctsi.ufl.edu".format(username)
+    print destination
 
     os.system("cat {} | ssh {} ARG1={} 'bash -s' ".format(make_script_file, destination, image_type))
     folder_name = time.strftime("%m_%d_%y")
