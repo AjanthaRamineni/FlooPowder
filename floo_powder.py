@@ -29,8 +29,10 @@ def step_into_fireplace(zip_dir):
     os.system("chmod 774 {}".format(put_files_script))
     os.system("chmod 774 {}".format(make_folder_script))
 
+    # os.system("ls -l")
     # origin  = os.path.join(zip_dir,zip_file)
     destination = "{}@tools2.ctsi.ufl.edu".format(username)
+    print destination
 
     os.system("cat {} | ssh {} ARG1={} 'bash -s' ".format(make_folder_script, destination, image_type))
     folder_name = time.strftime("%m_%d_%y")
