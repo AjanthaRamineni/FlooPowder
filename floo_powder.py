@@ -6,6 +6,7 @@ import time
 
 def connect_to_floo_network(config_path):
     #Read in the config file. If the config file is missing or the wrong format, exit the program.
+    print config_path
     try:
         with open(config_path, 'r') as config_file:
             config = yaml.load(config_file.read())
@@ -14,8 +15,8 @@ def connect_to_floo_network(config_path):
         exit()
     return config
 
-def step_into_fireplace(zip_dir):
-    upload_config = connect_to_floo_network('Upload_Config.yaml')
+def step_into_fireplace(zip_dir, config_path):
+    upload_config = connect_to_floo_network(config_path)
     username = upload_config.get('Username')
     print username
     sftp_usrname = upload_config.get('sftp_Username')
@@ -39,12 +40,19 @@ def step_into_fireplace(zip_dir):
         if not zip_file == ".DS_Store":
             origin  = os.path.join(zip_dir,zip_file)
             os.system('scp {} {}:{}'.format(origin,destination,dest_path))
+ #"ssh {user}@{host}".format(**config)
+    os.system("cat {} | ssh {} image_type={} zip_dir={} folder={} password={sftp_Password} username={sftp_Username} hostname={sftp_Host}  'bash -s' ".format(put_files_script, destination, image_type, zip_dir, folder_name, **upload_config))
+        #ARG1={} ARG2={} ARG3={} ARG4={} ARG5={} ARG6={folder_name} 'bash -s' ".format(put_files_script,destination,image_type,sftp_pass,sftp_usrname,sftp_hostname,zip_dir,folder_name))
 
-    os.system("cat {} | ssh {} ARG1={} ARG2={} ARG3={} ARG4={} ARG5={} ARG6={} 'bash -s' ".format(put_files_script,destination,image_type,sftp_pass,sftp_usrname,sftp_hostname,zip_dir,folder_name))
-
-def main(argv):
-    zip_dir = argv
-    step_into_fireplace(zip_dir)
+def main(argv1, argv2):
+    zip_dir = argv1
+    try:
+        
+        config_path = argv2
+    except:
+        print("Error: Check config path")
+        exit()
+    step_into_fireplace(zip_dir, config_path)
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
