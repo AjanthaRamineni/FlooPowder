@@ -39,8 +39,9 @@ def step_into_fireplace(zip_dir):
         if not zip_file == ".DS_Store":
             origin  = os.path.join(zip_dir,zip_file)
             os.system('scp {} {}:{}'.format(origin,destination,dest_path))
-
-    os.system("cat {} | ssh {} ARG1={} ARG2={} ARG3={} ARG4={} ARG5={} ARG6={} 'bash -s' ".format(put_files_script,destination,image_type,sftp_pass,sftp_usrname,sftp_hostname,zip_dir,folder_name))
+ #"ssh {user}@{host}".format(**config)
+    os.system("cat {} | ssh {} image_type={} zip_dir={} folder={} password={sftp_Password} username={sftp_Username} hostname={sftp_Host}  'bash -s' ".format(put_files_script, destination, image_type, zip_dir, folder_name, **upload_config))
+        #ARG1={} ARG2={} ARG3={} ARG4={} ARG5={} ARG6={folder_name} 'bash -s' ".format(put_files_script,destination,image_type,sftp_pass,sftp_usrname,sftp_hostname,zip_dir,folder_name))
 
 def main(argv):
     zip_dir = argv
