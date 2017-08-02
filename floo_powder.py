@@ -29,8 +29,6 @@ def step_into_fireplace(zip_dir):
     os.system("chmod 774 {}".format(put_files_script))
     os.system("chmod 774 {}".format(make_folder_script))
 
-    # os.system("ls -l")
-    # origin  = os.path.join(zip_dir,zip_file)
     destination = "{}@tools2.ctsi.ufl.edu".format(username)
     print destination
 
